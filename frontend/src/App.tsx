@@ -1,10 +1,22 @@
-import React from 'react'
+import AuthButtons from "./components/AuthButtons";
+import useSyncUser from "./hooks/useSyncUser";
 
-const App = () => {
+function App() {
+  useSyncUser();
+  
   return (
-    <div className='min-h-screen bg-black text-white'>
-      <h1 className='text-5xl'>Pulseboard</h1>
+    <div style={{ padding: "40px" }}>
+
+      <h1>
+
+        MERN + Clerk + TypeScript
+
+      </h1>
+
+      <AuthButtons />
+
     </div>
+
   )
 }
 
