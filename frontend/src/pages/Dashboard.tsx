@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { getMyPollsAPI } from "../services/poll.service";
 import PollCard from "../components/PollCard";
+import { useAuth } from "@clerk/react";
 
 const Dashboard = () => {
 
     const [polls, setPolls] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const { getToken } = useAuth();
+
+    
     const fetchPolls = async () => {
         try {
-            const res = await getMyPollsAPI();
+            const token = await getToken();
+            const res = await getMyPollsAPI(token);
             setPolls(res.polls);
         } catch (err) {
             console.log(err);
