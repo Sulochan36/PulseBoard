@@ -7,12 +7,13 @@ import {
     getPublicPollController,
     publishPollController,
 } from "./poll.controller.js";
+import { isAuthenticated } from "../../common/middleware/auth.middleware.js";
 
 
 const router = Router();
 
 router.post("/",createPollController);
-router.get("/my",getMyPollsController);
+router.get("/my",isAuthenticated,getMyPollsController);
 router.get("/public/:slug",getPublicPollController);
 router.get("/:pollId",getPollByIdController);
 router.delete("/:pollId",deletePollController);
