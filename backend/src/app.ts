@@ -22,9 +22,17 @@ export function createApp(){
 
     app.use(express.json());
     app.use(cookieParser());
-    app.use(clerkMiddleware())
+    app.use(clerkMiddleware({
+        secretKey: process.env.CLERK_SECRET_KEY!,
+    }
+        
+    ))
 
-    
+    console.log("CLERK KEY CHECK:", {
+        exists: !!process.env.CLERK_SECRET_KEY,
+        prefix: process.env.CLERK_SECRET_KEY?.slice(0, 10),
+        length: process.env.CLERK_SECRET_KEY?.length,
+    });
 
     app.use((req, res, next) => {
         console.log("SECRET EXISTS:", !!process.env.CLERK_SECRET_KEY);
