@@ -1,10 +1,8 @@
 import express from 'express'
-
-import { requireAuth } from '@clerk/express'
 import { syncUser } from './user.controller.js'
 
 const router = express.Router()
 
-router.post('/sync', requireAuth(), syncUser)
+router.post('/sync', syncUser)
 
 export default router

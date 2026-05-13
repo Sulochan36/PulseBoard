@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export async function connectDB(uri:string | undefined): Promise<mongoose.Connection> {
-    // Your code here
+    
     if (!uri) {
         throw new Error('MongoDB URI is required');
     }

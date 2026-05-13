@@ -7,10 +7,10 @@ const useSyncUser = () => {
     const { user, isSignedIn } = useUser();
 
     useEffect(() => {
-        if (isSignedIn && user) {
+        if (isSignedIn && user?.id) {
             syncUser();
-    }
-}, [isSignedIn, user]);
+        }
+    }, [user?.id, isSignedIn]);
 
 
 
