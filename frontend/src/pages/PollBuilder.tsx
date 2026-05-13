@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { createPollAPI } from "../services/poll.service";
-import { useAuth } from "@clerk/react";
 
 type Option = {
     text: string;
@@ -37,7 +36,6 @@ export default function PollBuilder() {
 
     const [loading, setLoading] = useState(false);
     const [createdPollLink, setCreatedPollLink] = useState("");
-    const { getToken } = useAuth();
 
 
 
@@ -150,8 +148,7 @@ export default function PollBuilder() {
 
         try {
             setLoading(true);
-            const token = await getToken();
-            const response = await createPollAPI(formData, token);
+            const response = await createPollAPI(formData);
             console.log(response);
 
             const slug = response.poll.slug;

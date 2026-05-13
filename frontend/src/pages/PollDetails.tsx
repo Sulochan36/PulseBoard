@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPollByIdAPI, deletePollAPI, publishPollAPI } from "../services/poll.service";
-import { useAuth } from "@clerk/react";
 
 const PollDetails = () => {
 
     const { pollId } = useParams();
     const navigate = useNavigate();
-    const { getToken } = useAuth();
 
     const [poll, setPoll] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     const fetchPoll = async () => {
         try {
-            const token = await getToken();
-            const res = await getPollByIdAPI(pollId!, token);
+            const res = await getPollByIdAPI(pollId!);
             setPoll(res.poll);
         } catch (err) {
             console.log(err);
