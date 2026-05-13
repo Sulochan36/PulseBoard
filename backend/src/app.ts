@@ -10,17 +10,19 @@ import responseRoutes from "./modules/response/response.routes.js";
 export function createApp(){
     const app = express();
 
+    
+
+
+    app.use(express.json());
+
+    app.use(clerkMiddleware())
+
     app.use(
         cors({
             origin: process.env.FRONTEND_URL,
             credentials: true,
         })
     )
-
-
-    app.use(express.json());
-
-    app.use(clerkMiddleware())
 
     app.get('/health' , (req,res) => {
         return res.json({ ok: true });
