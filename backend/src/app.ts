@@ -28,7 +28,6 @@ export function createApp(){
 
     app.use((req, res, next) => {
         console.log("AUTH HEADER:", req.headers.authorization);
-        console.log("🍪 COOKIE HEADER:" , req.headers.cookie);
         console.log("🔑 AUTH:", getAuth(req));
         next();
     });
