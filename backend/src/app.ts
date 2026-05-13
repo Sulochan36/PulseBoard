@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors'
 
-import { clerkMiddleware } from '@clerk/express'
+import { clerkMiddleware, getAuth } from '@clerk/express'
 
 import userRoutes from './modules/user/user.routes.js'
 import pollRoutes from "./modules/polls/poll.routes.js";
@@ -23,6 +23,13 @@ export function createApp(){
             credentials: true,
         })
     )
+
+    app.use((req, res, next) => {
+        console.log("🔥 URL:", req.url);
+        console.log("🍪 COOKIE HEADER:", req.headers.cookie);
+        console.log("🔑 AUTH:", getAuth(req));
+        next();
+    });
 
     app.get('/health' , (req,res) => {
         return res.json({ ok: true });
