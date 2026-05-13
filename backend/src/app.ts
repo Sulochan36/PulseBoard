@@ -27,6 +27,12 @@ export function createApp(){
     
 
     app.use((req, res, next) => {
+        console.log("SECRET EXISTS:", !!process.env.CLERK_SECRET_KEY);
+
+        console.log(
+            "SECRET PREFIX:",
+            process.env.CLERK_SECRET_KEY?.slice(0, 10)
+        );
         console.log("AUTH HEADER:", !!req.headers.authorization);
         console.log("🍪 COOKIE HEADER:" , !!req.headers.cookie);
         console.log("🔑 AUTH:", getAuth(req));

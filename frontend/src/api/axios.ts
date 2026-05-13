@@ -5,3 +5,8 @@ export const axiosInstance = axios.create({
     withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use((config) => {
+    console.log("REQUEST URL:", config.url);
+    console.log("HEADERS:", config.headers);
+    return config;
+});
