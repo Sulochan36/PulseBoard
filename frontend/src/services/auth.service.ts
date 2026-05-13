@@ -7,7 +7,11 @@ interface SyncUserData {
 
 }
 
-export const syncUserAPI = async (data: SyncUserData) => {
-    const response = await axiosInstance.post("/users/sync",data);
+export const syncUserAPI = async (data: SyncUserData, token: string) => {
+    const response = await axiosInstance.post("/users/sync", data, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
 };

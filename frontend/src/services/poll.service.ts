@@ -1,5 +1,9 @@
+import { useAuth } from "@clerk/react";
 import { axiosInstance } from "../api/axios";
 import type { CreatePollInput } from "../types/polltypes";
+
+const { getToken } = useAuth();
+const token = await getToken();
 
 
 /* CREATE */
@@ -10,7 +14,11 @@ export const createPollAPI = async (data: CreatePollInput) => {
 
 /* GET MY POLLS */
 export const getMyPollsAPI = async () => {
-    const res = await axiosInstance.get("/polls/my");
+    const res = await axiosInstance.get("/polls/my", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return res.data;
 };
 

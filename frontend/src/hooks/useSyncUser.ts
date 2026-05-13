@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { useUser } from "@clerk/react";
+import { useAuth, useUser } from "@clerk/react";
 import { syncUserAPI } from "../services/auth.service";
 
 const useSyncUser = () => {
 
     const { user, isSignedIn } = useUser();
+
+    const {getToken} = useAuth();
 
     useEffect(() => {
         if (isSignedIn && user?.id) {
@@ -17,12 +19,15 @@ const useSyncUser = () => {
     const syncUser = async () => {
 
         try {
-
-            await syncUserAPI({
-                email:user?.primaryEmailAddress?.emailAddress,
-                username: user?.fullName,
-                imageUrl: user?.imageUrl,
-            });
+            const token = await getToken()
+            await syncUserAPI(
+                {
+                    email: user?.primaryEmailAddress?.emailAddress,
+                    username: user?.fullName,
+                    imageUrl: user?.imageUrl,
+                },
+                token || ""
+            );
 
             console.log("User synced");
 
