@@ -6,7 +6,9 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    console.log("REQUEST URL:", config.url);
+    console.log("🌐 REQUEST:");
+    console.log("URL:", config.url);
+    console.log("withCredentials:", config.withCredentials);
     console.log("HEADERS:", config.headers);
     return config;
 });
