@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors'
+import cookieParser from "cookie-parser";
 
 import { clerkMiddleware, getAuth } from '@clerk/express'
 
@@ -20,7 +21,7 @@ export function createApp(){
 
 
     app.use(express.json());
-
+    app.use(cookieParser());
     app.use(clerkMiddleware())
 
     
