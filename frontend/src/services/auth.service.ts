@@ -1,4 +1,4 @@
-import {axiosInstance} from "../api/axios";
+import { axiosInstance } from "../api/axios";
 
 interface SyncUserData {
     email: string | undefined;
