@@ -13,29 +13,45 @@ export const syncUser = async (req: Request, res: Response) => {
             });
         }
 
-        
         const clerkUser = await clerkClient.users.getUser(clerkId);
 
-        const email = clerkUser.emailAddresses?.[0]?.emailAddress;
-
+        // Fallbacks prevent 'undefined' values from breaking strict string types
+        const email = clerkUser.emailAddresses?.[0]?.emailAddress || "";
         const username = clerkUser.username || clerkUser.firstName || "user";
 
-        const imageUrl = clerkUser.imageUrl;
+        // Handle optional imageUrl field cleanly
+        const imageUrl = clerkUser.imageUrl || undefined;
 
-        
-        const user = await User.findOneAndUpdate(
-            { clerkId },
-            {
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "User must have a primary email address on Clerk",
+            });
+        }
+
+        // Casting the filter object to 'any' stops Mongoose from breaking on strict $or validation
+        let user = await User.findOne({
+            $or: [
+                { clerkId: clerkId },
+                { email: email }
+            ]
+        } as any);
+
+        if (user) {
+            
+            user.clerkId = clerkId;
+            user.email = email;
+            user.username = username;
+            user.imageUrl = imageUrl;
+            await user.save();
+        } else {
+            user = await User.create({
                 clerkId,
                 email,
                 username,
                 imageUrl,
-            },
-            {
-                new: true,
-                upsert: true,
-            }
-        );
+            });
+        }
 
         return res.status(200).json({
             success: true,
@@ -44,74 +60,10 @@ export const syncUser = async (req: Request, res: Response) => {
         });
 
     } catch (error) {
-        const message =
-            error instanceof Error
-                ? error.message
-                : "Something went wrong";
-
+        const message = error instanceof Error ? error.message : "Something went wrong";
         return res.status(500).json({
             success: false,
             message,
         });
     }
 };
-
-
-// import type { Request, Response } from "express"
-// import User from "./user.model.js"
-// import { getAuth } from "@clerk/express"
-
-
-
-
-
-// export const syncUser = async (req: Request,
-//     res: Response) => {
-
-//     try {
-
-//         const { userId: clerkId } = getAuth(req)
-
-//         const existingUser = await User.findOne({ clerkId })
-
-
-//         if (existingUser) {
-
-//             return res.status(200).json({
-//                 success: true,
-//                 message: 'User already exists',
-//                 user: existingUser,
-//             })
-//         }
-
-
-//         const newUser = await User.create({
-//             clerkId,
-//             email: req.body.email,
-//             username: req.body.username,
-//             ...(req.body.imageUrl && {
-//                 imageUrl: req.body.imageUrl,
-//             }),
-
-//         })
-
-
-//         res.status(201).json({
-//             success: true,
-//             message: 'User created successfully',
-//             user: newUser,
-//         })
-
-//     } catch (error) {
-
-//         const message =
-//             error instanceof Error
-//                 ? error.message
-//                 : "Something went wrong"
-
-//         res.status(500).json({
-//             success: false,
-//             message,
-//         })
-//     }
-// }
