@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPollByIdAPI, deletePollAPI, publishPollAPI } from "../services/poll.service";
+import {
+    Copy,
+    Trash2,
+    BarChart3,
+    Rocket,
+    Clock,
+    Shield,
+    FileText,
+} from "lucide-react";
 
 const PollDetails = () => {
 
@@ -42,115 +51,157 @@ const PollDetails = () => {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white p-8 space-y-6">
+        <div className="min-h-screen bg-zinc-950 text-white px-4 py-10 md:px-10">
 
-            {/* HEADER */}
-            <div>
-                <h1 className="text-3xl font-bold">{poll.title}</h1>
-                <p className="text-zinc-400">{poll.description}</p>
+            {/* BACKGROUND GLOW */}
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute top-10 left-1/2 h-75 w-75 -translate-x-1/2 bg-cyan-500/10 blur-3xl rounded-full" />
+                <div className="absolute bottom-0 right-0 h-75 w-75 bg-blue-500/10 blur-3xl rounded-full" />
             </div>
 
-            {/* STATUS */}
-            <div className="flex gap-3 text-sm">
-                <span className={`px-3 py-1 rounded ${poll.isPublished ? "bg-green-600" : "bg-yellow-600"
-                    }`}>
-                    {poll.isPublished ? "Published" : "Draft"}
-                </span>
+            <div className="max-w-5xl mx-auto space-y-10">
 
-                <span className="px-3 py-1 bg-zinc-800 rounded">
-                    {poll.responseMode}
-                </span>
-            </div>
+                {/* HEADER */}
+                <div className="space-y-2">
+                    <div className="inline-flex items-center gap-2 text-sm text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-4 py-1 rounded-full">
+                        <FileText size={14} />
+                        Poll Details
+                    </div>
 
-            {/* SHARE LINK */}
-            <div className="bg-zinc-900 p-4 rounded-xl space-y-2">
-                <p className="text-sm text-zinc-400">Share Link</p>
+                    <h1 className="text-4xl font-bold">{poll.title}</h1>
+                    <p className="text-zinc-400 max-w-2xl">
+                        {poll.description}
+                    </p>
+                </div>
 
-                <div className="flex gap-2">
-                    <input
-                        value={shareLink}
-                        readOnly
-                        className="flex-1 bg-zinc-800 px-3 py-2 rounded"
-                    />
+                {/* STATUS CARDS */}
+                <div className="grid md:grid-cols-3 gap-4">
+
+                    <div className="bg-zinc-900/60 border border-white/10 rounded-2xl p-4">
+                        <div className="flex items-center gap-2 text-zinc-400 text-sm">
+                            <Shield size={16} />
+                            Status
+                        </div>
+                        <p className={`mt-2 text-sm font-medium ${poll.isPublished ? "text-green-400" : "text-yellow-400"
+                            }`}>
+                            {poll.isPublished ? "Published" : "Draft"}
+                        </p>
+                    </div>
+
+                    <div className="bg-zinc-900/60 border border-white/10 rounded-2xl p-4">
+                        <div className="flex items-center gap-2 text-zinc-400 text-sm">
+                            <BarChart3 size={16} />
+                            Response Mode
+                        </div>
+                        <p className="mt-2 text-sm text-white">
+                            {poll.responseMode}
+                        </p>
+                    </div>
+
+                    <div className="bg-zinc-900/60 border border-white/10 rounded-2xl p-4">
+                        <div className="flex items-center gap-2 text-zinc-400 text-sm">
+                            <Clock size={16} />
+                            Expires
+                        </div>
+                        <p className="mt-2 text-sm text-white">
+                            {new Date(poll.expiresAt).toLocaleString()}
+                        </p>
+                    </div>
+
+                </div>
+
+                {/* SHARE CARD */}
+                <div className="bg-zinc-900/60 border border-white/10 rounded-3xl p-6 space-y-4">
+
+                    <h2 className="text-lg font-semibold">
+                        Share Poll
+                    </h2>
+
+                    <div className="flex flex-col md:flex-row gap-3">
+
+                        <input
+                            value={shareLink}
+                            readOnly
+                            className="flex-1 rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3"
+                        />
+
+                        <button
+                            onClick={() => navigator.clipboard.writeText(shareLink)}
+                            className="flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-500 transition px-5 py-3 rounded-2xl"
+                        >
+                            <Copy size={16} />
+                            Copy
+                        </button>
+
+                    </div>
+                </div>
+
+                {/* ACTIONS */}
+                <div className="flex flex-wrap gap-3">
+
+                    {!poll.isPublished && (
+                        <button
+                            onClick={handlePublish}
+                            className="flex items-center gap-2 bg-green-600 hover:bg-green-500 px-5 py-3 rounded-2xl"
+                        >
+                            <Rocket size={16} />
+                            Publish Poll
+                        </button>
+                    )}
 
                     <button
                         onClick={() =>
-                            navigator.clipboard.writeText(shareLink)
+                            navigate(`/dashboard/poll/${poll._id}/analytics`)
                         }
-                        className="bg-blue-600 px-4 py-2 rounded"
+                        className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 px-5 py-3 rounded-2xl"
                     >
-                        Copy
+                        <BarChart3 size={16} />
+                        Analytics
                     </button>
-                </div>
-            </div>
 
-            {/* META INFO */}
-            <div className="text-sm text-zinc-400 space-y-1">
-                <p>Questions: {poll.questions.length}</p>
-                <p>
-                    Expires:{" "}
-                    {new Date(poll.expiresAt).toLocaleString()}
-                </p>
-            </div>
-
-            {/* ACTIONS */}
-            <div className="flex gap-3 flex-wrap">
-
-                {!poll.isPublished && (
                     <button
-                        onClick={handlePublish}
-                        className="bg-green-600 px-4 py-2 rounded"
+                        onClick={handleDelete}
+                        className="flex items-center gap-2 bg-red-600 hover:bg-red-500 px-5 py-3 rounded-2xl"
                     >
-                        Publish Poll
+                        <Trash2 size={16} />
+                        Delete
                     </button>
-                )}
 
-                <button
-                    onClick={() =>
-                        navigate(`/dashboard/poll/${poll._id}/analytics`)
-                    }
-                    className="bg-purple-600 px-4 py-2 rounded"
-                >
-                    View Analytics
-                </button>
+                </div>
 
-                <button
-                    onClick={handleDelete}
-                    className="bg-red-600 px-4 py-2 rounded"
-                >
-                    Delete Poll
-                </button>
+                
+                <div className="space-y-4">
 
-            </div>
+                    <h2 className="text-xl font-semibold">
+                        Questions
+                    </h2>
 
-            {/* QUESTIONS PREVIEW */}
-            <div className="space-y-4 mt-8">
+                    <div className="grid gap-4">
+                        {poll.questions.map((q: any, i: number) => (
+                            <div
+                                key={i}
+                                className="bg-zinc-900/60 border border-white/10 rounded-3xl p-5 space-y-3"
+                            >
 
-                <h2 className="text-xl font-semibold">
-                    Questions
-                </h2>
-
-                {poll.questions.map((q: any, i: number) => (
-                    <div
-                        key={i}
-                        className="bg-zinc-900 p-4 rounded-xl"
-                    >
-                        <p className="font-medium">
-                            {q.question}
-                        </p>
-
-                        <div className="mt-2 text-sm text-zinc-400">
-                            {q.options.map((opt: any, j: number) => (
-                                <p key={j}>
-                                    • {opt.text}
+                                <p className="font-medium text-white">
+                                    {q.question}
                                 </p>
-                            ))}
-                        </div>
+
+                                <div className="space-y-1 text-sm text-zinc-400">
+                                    {q.options.map((opt: any, j: number) => (
+                                        <p key={j}>
+                                            • {opt.text}
+                                        </p>
+                                    ))}
+                                </div>
+
+                            </div>
+                        ))}
                     </div>
-                ))}
+
+                </div>
 
             </div>
-
         </div>
     );
 };

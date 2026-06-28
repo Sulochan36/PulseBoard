@@ -1,15 +1,15 @@
 import { NavLink, Outlet } from "react-router-dom"
-import Navbar from "../components/Navbar"
+import Navbar from "../components/layout/Navbar"
+import Footer from "../components/layout/Footer"
+import Container from "../components/layout/Container"
 
 const DashboardLayout = () => {
     return (
-        <div>
-
-           
+        <div className='bg-zinc-950 text-white flex flex-col gap-10'>
             <Navbar />
 
-            
-            <nav className="flex gap-4 border-b px-6 py-4 bg-white">
+            <Container>
+            <nav className="border-2 w-full mt-30 border-green-300 text-white flex justify-between items-center gap-10 py-6 px-3">
 
                 <NavLink to="/dashboard">
                     Dashboard
@@ -24,11 +24,14 @@ const DashboardLayout = () => {
                 </NavLink>
 
             </nav>
+        </Container>
 
             
             <main className="p-6">
                 <Outlet />
             </main>
+
+            <Footer/>
 
         </div>
     )

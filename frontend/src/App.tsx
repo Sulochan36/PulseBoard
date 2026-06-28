@@ -4,6 +4,7 @@ import useSyncUser from "./hooks/useSyncUser"
 import { useAuth } from "@clerk/react"
 import { useEffect } from "react"
 import { setupAxiosInterceptors } from "./api/axios"
+import { Toaster } from "react-hot-toast"
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
 
   return (
     <>
+      <Toaster position="top-right" />
       <RouterProvider router={router} />
     </>
   )

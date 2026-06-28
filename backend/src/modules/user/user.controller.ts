@@ -15,11 +15,9 @@ export const syncUser = async (req: Request, res: Response) => {
 
         const clerkUser = await clerkClient.users.getUser(clerkId);
 
-        // Fallbacks prevent 'undefined' values from breaking strict string types
+
         const email = clerkUser.emailAddresses?.[0]?.emailAddress || "";
         const username = clerkUser.username || clerkUser.firstName || "user";
-
-        // Handle optional imageUrl field cleanly
         const imageUrl = clerkUser.imageUrl || undefined;
 
         if (!email) {
@@ -29,7 +27,6 @@ export const syncUser = async (req: Request, res: Response) => {
             });
         }
 
-        // Casting the filter object to 'any' stops Mongoose from breaking on strict $or validation
         let user = await User.findOne({
             $or: [
                 { clerkId: clerkId },

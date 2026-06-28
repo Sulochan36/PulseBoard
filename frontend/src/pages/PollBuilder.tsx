@@ -1,5 +1,13 @@
 import { useState } from "react";
 import { createPollAPI } from "../services/poll.service";
+import {
+    Plus,
+    Trash2,
+    CheckCircle2,
+    FileText,
+    Clock,
+    Shield,
+} from "lucide-react";
 
 type Option = {
     text: string;
@@ -165,260 +173,233 @@ export default function PollBuilder() {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-white px-4 py-10">
-            <div className="max-w-4xl mx-auto">
-                <form onSubmit={handleSubmit} className="space-y-8">
-                    
+        <div className="relative min-h-screen bg-zinc-950 text-white px-4 py-10 md:px-8 overflow-hidden">
 
+            {/* background glow */}
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute top-0 left-1/2 h-100 w-100 -translate-x-1/2 bg-cyan-500/10 blur-3xl rounded-full" />
+                <div className="absolute bottom-0 right-0 h-75 w-75 bg-blue-500/10 blur-3xl rounded-full" />
+            </div>
+
+            <div className="max-w-5xl mx-auto space-y-10">
+
+                {/* HEADER */}
+                <div className="space-y-3">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-1 text-sm text-cyan-300">
+                        <FileText size={16} />
+                        Poll Builder
+                    </div>
+
+                    <h1 className="text-4xl font-bold">
+                        Create Interactive Polls
+                    </h1>
+
+                    <p className="text-zinc-400 max-w-2xl">
+                        Build real-time polls with multiple questions, analytics, and shareable links.
+                    </p>
+                </div>
+
+                {/* FORM */}
+                <form onSubmit={handleSubmit} className="space-y-10">
+
+                    {/* TITLE */}
                     <div className="space-y-2">
-                        <label className="text-sm text-zinc-400">
-                            Poll Title
-                        </label>
+                        <label className="text-sm text-zinc-400">Poll Title</label>
 
                         <input
-                            type="text"
                             name="title"
                             value={formData.title}
                             onChange={handleBasicChange}
-                            placeholder="Favorite Frontend Framework"
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none"
+                            className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
+                            placeholder="e.g. Best Frontend Framework"
                         />
                     </div>
 
                     {/* DESCRIPTION */}
-
                     <div className="space-y-2">
-                        <label className="text-sm text-zinc-400">
-                            Description
-                        </label>
+                        <label className="text-sm text-zinc-400">Description</label>
 
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleBasicChange}
                             rows={4}
-                            placeholder="Tell users about this poll..."
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none resize-none"
+                            className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
+                            placeholder="Describe your poll..."
                         />
                     </div>
 
-                    {/* RESPONSE MODE */}
+                    <div className="grid md:grid-cols-2 gap-6">
 
-                    <div className="space-y-3">
-                        <label className="text-sm text-zinc-400">
-                            Response Mode
-                        </label>
-
-                        <div className="flex gap-6">
-                            <label className="flex items-center gap-2">
-                                <input
-                                    type="radio"
-                                    name="responseMode"
-                                    value="anonymous"
-                                    checked={
-                                        formData.responseMode === "anonymous"
-                                    }
-                                    onChange={handleBasicChange}
-                                />
-
-                                Anonymous
+                        <div className="space-y-2">
+                            <label className="text-sm text-zinc-400 flex items-center gap-2">
+                                <Shield size={16} /> Response Mode
                             </label>
 
-                            <label className="flex items-center gap-2">
-                                <input
-                                    type="radio"
-                                    name="responseMode"
-                                    value="authenticated"
-                                    checked={
-                                        formData.responseMode ===
-                                        "authenticated"
-                                    }
-                                    onChange={handleBasicChange}
-                                />
+                            <select
+                                name="responseMode"
+                                value={formData.responseMode}
+                                onChange={handleBasicChange}
+                                className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3"
+                            >
+                                <option value="anonymous">Anonymous</option>
+                                <option value="authenticated">Authenticated</option>
+                            </select>
+                        </div>
 
-                                Authenticated
+                        <div className="space-y-2">
+                            <label className="text-sm text-zinc-400 flex items-center gap-2">
+                                <Clock size={16} /> Expiry
                             </label>
+
+                            <input
+                                type="datetime-local"
+                                name="expiresAt"
+                                value={formData.expiresAt}
+                                onChange={handleBasicChange}
+                                className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3"
+                            />
                         </div>
                     </div>
 
-                    {/* EXPIRY */}
-
-                    <div className="space-y-2">
-                        <label className="text-sm text-zinc-400">
-                            Expiry Date & Time
-                        </label>
-
-                        <input
-                            type="datetime-local"
-                            name="expiresAt"
-                            value={formData.expiresAt}
-                            onChange={handleBasicChange}
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none"
-                        />
-                    </div>
-
-                    {/* QUESTIONS */}
-
                     <div className="space-y-6">
-                        {formData.questions.map(
-                            (question, questionIndex) => (
-                                <div
-                                    key={questionIndex}
-                                    className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-6"
-                                >
-                                    {/* QUESTION HEADER */}
+                        {formData.questions.map((q, qi) => (
+                            <div
+                                key={qi}
+                                className="rounded-3xl border border-white/10 bg-zinc-900/60 p-6 space-y-6"
+                            >
 
-                                    <div className="flex items-center justify-between">
-                                        <h2 className="text-lg font-semibold">
-                                            Question {questionIndex + 1}
-                                        </h2>
+                                {/* HEADER */}
+                                <div className="flex items-center justify-between">
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                removeQuestion(questionIndex)
-                                            }
-                                            className="text-red-400 text-sm"
-                                        >
-                                            Remove Question
-                                        </button>
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-9 w-9 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold">
+                                            {qi + 1}
+                                        </div>
+
+                                        <div>
+                                            <h2 className="font-semibold">
+                                                Question {qi + 1}
+                                            </h2>
+
+                                            <p className="text-xs text-zinc-500">
+                                                Configure options
+                                            </p>
+                                        </div>
                                     </div>
-
-                                    {/* QUESTION INPUT */}
-
-                                    <input
-                                        type="text"
-                                        value={question.question}
-                                        onChange={(e) =>
-                                            handleQuestionChange(
-                                                questionIndex,
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="Enter your question"
-                                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 outline-none"
-                                    />
-
-                                    {/* REQUIRED */}
-
-                                    <label className="flex items-center gap-3">
-                                        <input
-                                            type="checkbox"
-                                            checked={question.required}
-                                            onChange={() =>
-                                                toggleRequired(questionIndex)
-                                            }
-                                        />
-
-                                        Required Question
-                                    </label>
-
-                                    {/* OPTIONS */}
-
-                                    <div className="space-y-4">
-                                        {question.options.map(
-                                            (option, optionIndex) => (
-                                                <div
-                                                    key={optionIndex}
-                                                    className="flex gap-3"
-                                                >
-                                                    <input
-                                                        type="text"
-                                                        value={option.text}
-                                                        onChange={(e) =>
-                                                            handleOptionChange(
-                                                                questionIndex,
-                                                                optionIndex,
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        placeholder={`Option ${optionIndex + 1
-                                                            }`}
-                                                        className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 outline-none"
-                                                    />
-
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            removeOption(
-                                                                questionIndex,
-                                                                optionIndex
-                                                            )
-                                                        }
-                                                        className="text-red-400"
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            )
-                                        )}
-                                    </div>
-
-                                    {/* ADD OPTION */}
 
                                     <button
                                         type="button"
-                                        onClick={() =>
-                                            addOption(questionIndex)
-                                        }
-                                        className="bg-zinc-800 hover:bg-zinc-700 transition px-4 py-2 rounded-xl"
+                                        onClick={() => removeQuestion(qi)}
+                                        className="flex items-center gap-2 text-sm text-red-400 border border-red-500/20 bg-red-500/10 px-3 py-2 rounded-xl"
                                     >
-                                        + Add Option
+                                        <Trash2 size={16} />
+                                        Remove
                                     </button>
                                 </div>
-                            )
-                        )}
+
+                        
+                                <input
+                                    value={q.question}
+                                    onChange={(e) =>
+                                        handleQuestionChange(qi, e.target.value)
+                                    }
+                                    className="w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3"
+                                    placeholder="Enter question"
+                                />
+
+                                
+                                <div className="space-y-3">
+                                    {q.options.map((opt, oi) => (
+                                        <div key={oi} className="flex gap-3">
+
+                                            <input
+                                                value={opt.text}
+                                                onChange={(e) =>
+                                                    handleOptionChange(
+                                                        qi,
+                                                        oi,
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="flex-1 rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3"
+                                                placeholder={`Option ${oi + 1}`}
+                                            />
+
+                                            <button
+                                                type="button"
+                                                onClick={() => removeOption(qi, oi)}
+                                                className="px-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+
+                                        </div>
+                                    ))}
+                                </div>
+
+                                
+                                <button
+                                    type="button"
+                                    className="text-cyan-300 text-sm flex items-center gap-2"
+                                    onClick={() => addOption(qi)}
+                                >
+                                    <Plus size={16} />
+                                    Add Option
+                                </button>
+
+                            </div>
+                        ))}
                     </div>
 
-                    {/* ADD QUESTION */}
-
+                    
                     <button
                         type="button"
                         onClick={addQuestion}
-                        className="w-full border border-dashed border-zinc-700 py-4 rounded-2xl hover:border-zinc-500 transition"
+                        className="w-full rounded-3xl border border-dashed border-cyan-500/30 bg-cyan-500/5 py-6 text-cyan-300 hover:bg-cyan-500/10"
                     >
-                        + Add Question
+                        <div className="flex items-center justify-center gap-2">
+                            <Plus />
+                            Add Question
+                        </div>
                     </button>
 
-                    {/* SUBMIT */}
-
+                    
                     <button
                         type="submit"
-                        className="w-full bg-white text-black py-4 rounded-2xl font-semibold hover:opacity-90 transition"
+                        className="w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 font-semibold hover:scale-[1.01] transition"
                     >
                         {loading ? "Creating Poll..." : "Create Poll"}
                     </button>
 
-                    {
-                        createdPollLink && (
+                    
+                    {createdPollLink && (
+                        <div className="rounded-3xl border border-green-500/20 bg-green-500/10 p-6 space-y-4">
 
-                            <div className="bg-green-950 border border-green-800 rounded-2xl p-5 space-y-3">
-
-                                <h3 className="font-semibold text-green-400">
-                                    Poll Created Successfully
-                                </h3>
-
-                                <input
-                                    value={createdPollLink}
-                                    readOnly
-                                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3"
-                                />
-
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(
-                                            createdPollLink
-                                        );
-                                    }}
-                                    className="bg-green-500 text-black px-4 py-2 rounded-xl font-medium"
-                                >
-                                    Copy Link
-                                </button>
-
+                            <div className="flex items-center gap-2 text-green-400">
+                                <CheckCircle2 />
+                                Poll Created Successfully
                             </div>
-                        )
-                    }
+
+                            <input
+                                value={createdPollLink}
+                                readOnly
+                                className="w-full rounded-2xl border border-white/10 bg-zinc-900 px-4 py-3"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    navigator.clipboard.writeText(createdPollLink)
+                                }
+                                className="bg-green-500 text-black px-4 py-2 rounded-xl font-medium"
+                            >
+                                Copy Link
+                            </button>
+
+                        </div>
+                    )}
+
                 </form>
             </div>
         </div>

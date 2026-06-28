@@ -9,6 +9,13 @@ import QuestionBarChart from "../components/analytics/QuestionBarChart";
 import QuestionPieChart from "../components/analytics/QuestionPieChart";
 import LiveActivityFeed from "../components/analytics/LiveActivityFeed";
 
+import {
+    Activity,
+    BarChart3,
+    PieChart,
+    Users,
+} from "lucide-react";
+
 interface OptionAnalytics {
     optionId: string;
     text: string;
@@ -73,43 +80,18 @@ const PollAnalytics = () => {
 
             try {
 
-                console.log("📡 FETCH START");
+                const res = await getPollAnalyticsAPI(pollId);
 
-                const res =
-                    await getPollAnalyticsAPI(
-                        pollId
-                    );
-
-                console.log(
-                    "📦 RAW RESPONSE:",
-                    res
-                );
-
-                // SAFE NORMALIZATION
+                
                 const payload =
                     res?.data?.data ??
                     res?.data ??
                     res;
-
-                console.log(
-                    "🧠 NORMALIZED PAYLOAD:",
-                    payload
-                );
-
                 setData(payload);
-
-                console.log(
-                    "✅ STATE SET SUCCESS"
-                );
-
-            } catch (err) {
-
-                console.error(
-                    "❌ FETCH ERROR:",
-                    err
-                );
-
-            } finally {
+                } 
+                catch (err) {
+                    console.error("FETCH ERROR:",err);
+                } finally {
 
                 setLoading(false);
 
@@ -119,232 +101,168 @@ const PollAnalytics = () => {
         fetchAnalytics();
 
         return () => {
-
-            console.log(
-                "🔴 LEAVE ROOM:",
-                pollId
-            );
-
-            socket.emit(
-                "leavePollRoom",
-                pollId
-            );
+            socket.emit("leavePollRoom",pollId);
         };
 
     }, [pollId]);
 
-    // =========================
-    // SOCKET LISTENERS
-    // =========================
     useEffect(() => {
 
-        // REALTIME ANALYTICS
-        const analyticsHandler = (
-            updated: AnalyticsData
-        ) => {
 
-            console.log(
-                "⚡ ANALYTICS UPDATE:",
-                updated
-            );
-
-            if (!updated) return;
-
-            setData(updated);
+        const analyticsHandler = (updated: AnalyticsData) => {
+        if (!updated) return;
+        setData(updated);
         };
 
-        // LIVE ACTIVITY FEED
-        const activityHandler = (
-            activity: ActivityItem
-        ) => {
-
-            console.log(
-                "🔥 LIVE ACTIVITY:",
-                activity
-            );
-
-            setActivities((prev) => [
-
-                activity,
-
-                ...prev.slice(0, 9),
-
-            ]);
+        
+        const activityHandler = ( activity: ActivityItem) => {
+            setActivities((prev) => [activity,...prev.slice(0, 9),]);
         };
+        socket.on("poll:analyticsUpdated",analyticsHandler);
 
-        socket.on(
-            "poll:analyticsUpdated",
-            analyticsHandler
-        );
-
-        socket.on(
-            "poll:activity",
-            activityHandler
-        );
+        socket.on("poll:activity",activityHandler);
 
         return () => {
-
-            socket.off(
-                "poll:analyticsUpdated",
-                analyticsHandler
-            );
-
-            socket.off(
-                "poll:activity",
-                activityHandler
-            );
+            socket.off("poll:analyticsUpdated", analyticsHandler);
+            socket.off("poll:activity",activityHandler);
         };
 
     }, []);
 
-    // =========================
-    // LOADING STATE
-    // =========================
-    if (loading) {
 
+    if (loading) {
         return (
-            <div className="text-white p-6">
-                Loading analytics...
+            <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+                <div className="animate-pulse text-zinc-400">
+                    Loading analytics...
+                </div>
             </div>
         );
     }
 
-    // =========================
-    // EMPTY STATE
-    // =========================
     if (!data) {
-
-        console.warn(
-            "⚠️ DATA IS NULL"
-        );
-
         return (
-            <div className="text-white p-6">
+            <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
                 No analytics found
             </div>
         );
     }
 
-    console.log(
-        "🎯 FINAL RENDER DATA:",
-        data
-    );
-
     return (
-
-        <div className="min-h-screen bg-black text-white p-6 space-y-10">
-
-            {/* HEADER */}
-            <div className="space-y-2">
-
-                <h1 className="text-4xl font-bold">
-                    {data.poll?.title}
-                </h1>
-
-                <p className="text-zinc-400">
-                    {data.poll?.description}
-                </p>
-
-            </div>
-
-
-
-            <AnalyticsSummaryCards 
-                totalResponses={data.summary?.totalResponses || 0}
-                completionRate={data.summary?.completionRate || 0}
-            />
+        <div className="min-h-screen bg-zinc-950 text-white px-4 py-10 md:px-10">
 
             
-            <LiveActivityFeed activities={activities}/>
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute top-0 left-1/3 h-75 w-75 bg-cyan-500/10 blur-3xl rounded-full" />
+                <div className="absolute bottom-0 right-0 h-75 w-75 bg-blue-500/10 blur-3xl rounded-full" />
+            </div>
 
-            {/* QUESTIONS */}
-            <div className="space-y-10">
-                    {data.questions?.map((q) => (
+            <div className="max-w-6xl mx-auto space-y-10">
 
-                    <div
-                        key={q.questionId}
-                        className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-8"
-                    >
+                
+                <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-cyan-300 text-sm bg-cyan-500/10 border border-cyan-500/20 px-4 py-1 rounded-full w-fit">
+                        <BarChart3 size={14} />
+                        Live Analytics Dashboard
+                    </div>
 
-                        {/* QUESTION HEADER */}
-                        <div>
+                    <h1 className="text-4xl font-bold">
+                        {data.poll?.title}
+                    </h1>
 
-                            <h2 className="text-xl font-semibold">
-                                {q.question}
-                            </h2>
+                    <p className="text-zinc-400 max-w-2xl">
+                        {data.poll?.description}
+                    </p>
+                </div>
 
-                            <p className="text-sm text-zinc-500 mt-1">
-                                {q.totalAnswers} responses
-                            </p>
+                {/* SUMMARY */}
+                <AnalyticsSummaryCards
+                    totalResponses={data.summary?.totalResponses || 0}
+                    completionRate={data.summary?.completionRate || 0}
+                />
 
-                        </div>
+                
+                <div className="grid lg:grid-cols-4 gap-6">
+                    <div className="lg:col-span-3 space-y-8">
+                        <div className="space-y-6">
 
-                        
-
-                        {/* HORIZONTAL OPTION BARS */}
-                        <div className="space-y-4">
-
-                            {q.options?.map((opt) => (
-
+                            {data.questions?.map((q: any) => (
                                 <div
-                                    key={opt.optionId}
-                                    className="space-y-2"
+                                    key={q.questionId}
+                                    className="bg-zinc-900/60 border border-white/10 rounded-3xl p-6 space-y-6 hover:border-white/20 transition"
                                 >
 
-                                    <div className="flex justify-between text-sm">
+                                    
+                                    <div>
+                                        <h2 className="text-xl font-semibold">
+                                            {q.question}
+                                        </h2>
 
-                                        <span>
-                                            {opt.text}
-                                        </span>
-
-                                        <span>
-                                            {opt.count} votes ({opt.percentage}%)
-                                        </span>
-
+                                        <p className="text-sm text-zinc-500 mt-1 flex items-center gap-2">
+                                            <Users size={14} />
+                                            {q.totalAnswers} responses
+                                        </p>
                                     </div>
 
-                                    <div className="w-full h-3 bg-zinc-800 rounded-full overflow-hidden">
+                                    
+                                    <div className="space-y-4">
+                                        {q.options?.map((opt: any) => (
+                                            <div key={opt.optionId} className="space-y-2">
 
-                                        <div
-                                            className="h-full bg-green-500 rounded-full transition-all duration-500"
-                                            style={{
-                                                width: `${opt.percentage || 0}%`,
-                                            }}
-                                        />
+                                                <div className="flex justify-between text-sm text-zinc-300">
+                                                    <span>{opt.text}</span>
+                                                    <span className="text-cyan-400">
+                                                        {opt.count} ({opt.percentage}%)
+                                                    </span>
+                                                </div>
+
+                                                <div className="h-3 bg-zinc-800 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="h-full bg-linear-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500"
+                                                        style={{ width: `${opt.percentage || 0}%` }}
+                                                    />
+                                                </div>
+
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                 
+                                    <div className="grid md:grid-cols-2 gap-4">
+
+                                        <div className="bg-zinc-950/50 border border-white/5 rounded-2xl p-4">
+                                            <QuestionBarChart options={q.options} />
+                                        </div>
+
+                                        <div className="bg-zinc-950/50 border border-white/5 rounded-2xl p-4">
+                                            <QuestionPieChart options={q.options} />
+                                        </div>
 
                                     </div>
 
                                 </div>
-
                             ))}
 
                         </div>
-
-                        
-
-                        {/* CHARTS */}
-                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-                            <div className="bg-zinc-950 rounded-2xl p-4">
-                                <QuestionBarChart
-                                    options={q.options}
-                                />
-                            </div>
-
-                            <div className="bg-zinc-950 rounded-2xl p-4">
-                                <QuestionPieChart
-                                    options={q.options}
-                                />
-                            </div>
-
-                        </div>
-
                     </div>
 
-                ))}
+                    
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-6">
+                            <div className="bg-zinc-900/60 border border-white/10 rounded-3xl p-4">
+                                <div className="flex items-center gap-2 text-sm text-cyan-300 mb-4">
+                                    <Activity size={14} />
+                                    Live Activity
+                                </div>
+
+                                <LiveActivityFeed activities={activities} />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
-
         </div>
     );
 };

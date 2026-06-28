@@ -1,7 +1,6 @@
 import { nanoid } from "nanoid";
 import { PollModel } from "./poll.model.js";
 import type { CreatePollInput } from "./poll.types.js";
-import User from "../user/user.model.js";
 
 
 export const createPollService = async (data: CreatePollInput, userId: string) => {
