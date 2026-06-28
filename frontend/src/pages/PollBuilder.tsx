@@ -96,17 +96,17 @@ export default function PollBuilder() {
     };
 
 
-    const toggleRequired = (questionIndex: number) => {
-        const updatedQuestions = [...formData.questions];
+    // const toggleRequired = (questionIndex: number) => {
+    //     const updatedQuestions = [...formData.questions];
 
-        updatedQuestions[questionIndex].required =
-            !updatedQuestions[questionIndex].required;
+    //     updatedQuestions[questionIndex].required =
+    //         !updatedQuestions[questionIndex].required;
 
-        setFormData({
-            ...formData,
-            questions: updatedQuestions,
-        });
-    };
+    //     setFormData({
+    //         ...formData,
+    //         questions: updatedQuestions,
+    //     });
+    // };
 
 
     const addOption = (questionIndex: number) => {
@@ -367,7 +367,7 @@ export default function PollBuilder() {
                     
                     <button
                         type="submit"
-                        className="w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 font-semibold hover:scale-[1.01] transition"
+                        className="w-full rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 py-4 font-semibold hover:scale-[1.01] transition"
                     >
                         {loading ? "Creating Poll..." : "Create Poll"}
                     </button>
