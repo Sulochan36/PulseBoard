@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from '../components/layout/Container'
 import PollCard from '../components/PollCard'
 import { getMyPollsAPI } from '../services/poll.service';
