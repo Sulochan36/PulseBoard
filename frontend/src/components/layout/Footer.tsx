@@ -4,9 +4,9 @@ import Container from "../layout/Container";
 
 const Footer = () => {
     return (
-        <footer className="w-full border-t border-zinc-800 py-10 bg-zinc-900">
-            <Container>
-                <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <footer className="bottom-0 w-full border-t border-zinc-800 bg-zinc-900">
+            <Container className="border-x-2 border-neutral-700/60">
+                <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between py-10">
 
                     <div>
                         <h3 className="text-lg font-semibold">

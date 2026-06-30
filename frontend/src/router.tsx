@@ -16,6 +16,8 @@ import ProtectedRoute from "./ProtectedRoutes"
 import PollDetails from "./pages/PollDetails"
 import PollPage from "./pages/PollPage"
 import PollSuccess from "./pages/PollSuccess"
+import Responses from "./pages/Responses"
+import PollsCreated from "./pages/PollsCreated"
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -32,6 +34,8 @@ export const router = createBrowserRouter(
                 <Route element={<DashboardLayout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/dashboard/pollbuilder" element={<PollBuilder />} />
+                    <Route path="/dashboard/pollscreated" element={<PollsCreated />} />
+                    <Route path="/dashboard/responses" element={<Responses />} />
                     <Route path="/dashboard/poll/:pollId" element={<PollDetails />} />
                     <Route path="/dashboard/poll/:pollId/analytics" element={<PollAnalytics />} />
                 </Route>

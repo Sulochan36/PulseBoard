@@ -31,16 +31,15 @@ const Dashboard = () => {
             {/* TOP GRADIENT */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
 
-                <div className="absolute top-0 left-1/2 h-125 w-[500px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl" />
+                <div className="absolute top-0 left-1/2 h-125 w-125 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl" />
 
-                <div className="absolute top-40 right-0 h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-3xl" />
+                <div className="absolute top-40 right-0 h-75 w-75 rounded-full bg-blue-500/10 blur-3xl" />
 
             </div>
+
+
             <Container>
-
-            
-
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <section className="px-4 sm:px-6 lg:px-8 py-8">
 
                 {/* HEADER */}
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between mb-10">
@@ -75,7 +74,7 @@ const Dashboard = () => {
                     {/* QUICK STATS */}
                     <div className="grid grid-cols-2 gap-4 w-full sm:w-auto">
 
-                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 backdrop-blur-xl px-6 py-5 min-w-[140px]">
+                        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 backdrop-blur-xl px-6 py-5 min-w-35">
 
                             <p className="text-zinc-500 text-sm mb-2">
                                 Total Polls

@@ -6,3 +6,12 @@ body{
     font-family: "Outfit", sans-serif;
     font-optical-sizing: auto;
 }
+
+.navlink{
+    @apply bg-zinc-900 px-3 py-2 hover:bg-zinc-700 transition-colors duration-200 rounded-xl border border-zinc-800 
+}
+
+.datetime-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}

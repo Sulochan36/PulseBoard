@@ -8,7 +8,7 @@ const Layout = () => {
 
             <Navbar />
 
-            <main className="grow mt-10">
+            <main className="grow mt-10 ">
                 <Outlet />
             </main>
 

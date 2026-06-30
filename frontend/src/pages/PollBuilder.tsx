@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createPollAPI } from "../services/poll.service";
 import {
     Plus,
@@ -44,6 +44,8 @@ export default function PollBuilder() {
 
     const [loading, setLoading] = useState(false);
     const [createdPollLink, setCreatedPollLink] = useState("");
+
+    const inputRef = useRef<HTMLInputElement>(null);
 
 
 
@@ -96,17 +98,17 @@ export default function PollBuilder() {
     };
 
 
-    // const toggleRequired = (questionIndex: number) => {
-    //     const updatedQuestions = [...formData.questions];
+    const toggleRequired = (questionIndex: number) => {
+        const updatedQuestions = [...formData.questions];
 
-    //     updatedQuestions[questionIndex].required =
-    //         !updatedQuestions[questionIndex].required;
+        updatedQuestions[questionIndex].required =
+            !updatedQuestions[questionIndex].required;
 
-    //     setFormData({
-    //         ...formData,
-    //         questions: updatedQuestions,
-    //     });
-    // };
+        setFormData({
+            ...formData,
+            questions: updatedQuestions,
+        });
+    };
 
 
     const addOption = (questionIndex: number) => {
@@ -241,22 +243,24 @@ export default function PollBuilder() {
                                 onChange={handleBasicChange}
                                 className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3"
                             >
-                                <option value="anonymous">Anonymous</option>
-                                <option value="authenticated">Authenticated</option>
+                                <option className="bg-zinc-900 text-white" value="anonymous">Anonymous</option>
+                                <option className="bg-zinc-900 text-white" value="authenticated">Authenticated</option>
                             </select>
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 text-white">
                             <label className="text-md font-medium text-white/60 flex items-center gap-2">
                                 <Clock size={16} /> Expiry
                             </label>
 
                             <input
+                                ref={inputRef}
                                 type="datetime-local"
                                 name="expiresAt"
                                 value={formData.expiresAt}
                                 onChange={handleBasicChange}
-                                className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3"
+                                onClick={() => inputRef.current?.showPicker?.()}
+                                className="datetime-input w-full text-white rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3"
                             />
                         </div>
                     </div>
@@ -280,11 +284,28 @@ export default function PollBuilder() {
                                             <h2 className="font-semibold">
                                                 Question {qi + 1}
                                             </h2>
+                                        </div>
+                                    </div>
 
-                                            <p className="text-xs text-zinc-500">
-                                                Configure options
+                                    {/* Required Toggle */}
+                                    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-zinc-950 px-4 py-3">
+                                        <div>
+                                            <p className="text-sm font-medium text-white">Required Question</p>
+                                            <p className="text-xs text-zinc-400">
+                                                Users must answer this question.
                                             </p>
                                         </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleRequired(qi)}
+                                            className={`flex items-center cursor-pointer h-7 w-12 rounded-full transition-all duration-500 ${q.required ? "bg-cyan-500 justify-end" : "bg-zinc-700 justify-start"
+                                                }`}
+                                        >
+                                            <span
+                                                className={`h-6 w-6 rounded-full bg-white transition-all duration-500`}
+                                            />
+                                        </button>
                                     </div>
 
                                     <button
