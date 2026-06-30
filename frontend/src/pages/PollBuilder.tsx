@@ -203,28 +203,27 @@ export default function PollBuilder() {
                 <form onSubmit={handleSubmit} className="space-y-10">
 
                     {/* TITLE */}
-                    <div className="space-y-2">
-                        <label className="text-sm text-zinc-400">Poll Title</label>
+                    <div className="flex flex-col justify-center items-start space-y-3">
+                        <label className="text-md font-medium text-white/60">Poll Title</label>
 
                         <input
                             name="title"
                             value={formData.title}
                             onChange={handleBasicChange}
-                            className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
+                            className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
                             placeholder="e.g. Best Frontend Framework"
                         />
                     </div>
 
                     {/* DESCRIPTION */}
-                    <div className="space-y-2">
-                        <label className="text-sm text-zinc-400">Description</label>
-
+                    <div className="flex flex-col justify-center items-start space-y-3">
+                        <label className="text-md font-medium text-white/60">Description</label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleBasicChange}
                             rows={4}
-                            className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
+                            className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3 outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10"
                             placeholder="Describe your poll..."
                         />
                     </div>
@@ -232,7 +231,7 @@ export default function PollBuilder() {
                     <div className="grid md:grid-cols-2 gap-6">
 
                         <div className="space-y-2">
-                            <label className="text-sm text-zinc-400 flex items-center gap-2">
+                            <label className="text-md font-medium text-white/60 flex items-center gap-2">
                                 <Shield size={16} /> Response Mode
                             </label>
 
@@ -240,7 +239,7 @@ export default function PollBuilder() {
                                 name="responseMode"
                                 value={formData.responseMode}
                                 onChange={handleBasicChange}
-                                className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3"
+                                className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3"
                             >
                                 <option value="anonymous">Anonymous</option>
                                 <option value="authenticated">Authenticated</option>
@@ -248,7 +247,7 @@ export default function PollBuilder() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm text-zinc-400 flex items-center gap-2">
+                            <label className="text-md font-medium text-white/60 flex items-center gap-2">
                                 <Clock size={16} /> Expiry
                             </label>
 
@@ -257,7 +256,7 @@ export default function PollBuilder() {
                                 name="expiresAt"
                                 value={formData.expiresAt}
                                 onChange={handleBasicChange}
-                                className="w-full rounded-2xl border border-white/10 bg-zinc-900/70 px-4 py-3"
+                                className="w-full rounded-xl border border-white/10 bg-zinc-900/70 px-4 py-3"
                             />
                         </div>
                     </div>
@@ -304,7 +303,7 @@ export default function PollBuilder() {
                                     onChange={(e) =>
                                         handleQuestionChange(qi, e.target.value)
                                     }
-                                    className="w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3"
+                                    className="w-full rounded-xl border border-white/10 bg-zinc-950 px-4 py-3"
                                     placeholder="Enter question"
                                 />
 
@@ -322,7 +321,7 @@ export default function PollBuilder() {
                                                         e.target.value
                                                     )
                                                 }
-                                                className="flex-1 rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3"
+                                                className="flex-1 rounded-xl border border-white/10 bg-zinc-950 px-4 py-3"
                                                 placeholder={`Option ${oi + 1}`}
                                             />
 
@@ -341,7 +340,7 @@ export default function PollBuilder() {
                                 
                                 <button
                                     type="button"
-                                    className="text-cyan-300 text-sm flex items-center gap-2"
+                                    className="text-cyan-300 text-sm flex items-center gap-2 cursor-pointer hover:text-cyan-500"
                                     onClick={() => addOption(qi)}
                                 >
                                     <Plus size={16} />
@@ -356,7 +355,7 @@ export default function PollBuilder() {
                     <button
                         type="button"
                         onClick={addQuestion}
-                        className="w-full rounded-3xl border border-dashed border-cyan-500/30 bg-cyan-500/5 py-6 text-cyan-300 hover:bg-cyan-500/10"
+                        className="w-full rounded-2xl border border-dashed border-cyan-500/30 bg-cyan-500/5 py-6 text-cyan-300 hover:bg-cyan-500/10 cursor-pointer"
                     >
                         <div className="flex items-center justify-center gap-2">
                             <Plus />
@@ -367,7 +366,7 @@ export default function PollBuilder() {
                     
                     <button
                         type="submit"
-                        className="w-full rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 py-4 font-semibold hover:scale-[1.01] transition"
+                        className="w-full rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 py-4 font-semibold hover:scale-[1.01] transition cursor-pointer"
                     >
                         {loading ? "Creating Poll..." : "Create Poll"}
                     </button>

@@ -8,8 +8,8 @@ const DashboardLayout = () => {
         <div className='bg-zinc-950 text-white flex flex-col gap-10'>
             <Navbar />
 
-            <Container>
-            <nav className="border-2 w-full mt-30 border-green-300 text-white flex justify-between items-center gap-10 py-6 px-3">
+            <Container className='mt-10 border-x-2 border-neutral-700 w-full'>
+            <nav className="border-2 w-full mt-10 text-white flex justify-between items-center gap-10 py-6 px-3">
 
                 <NavLink to="/dashboard">
                     Dashboard
@@ -24,13 +24,13 @@ const DashboardLayout = () => {
                 </NavLink>
 
             </nav>
-        </Container>
 
             
-            <main className="p-6">
+            <main className="grow">
                 <Outlet />
             </main>
 
+        </Container>
             <Footer/>
 
         </div>

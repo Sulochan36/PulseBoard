@@ -140,7 +140,7 @@ const PollCard = ({ poll, onRefresh }: Props) => {
 
                         <Link2 size={14} />
 
-                        <span className="max-w-[140px] truncate">
+                        <span className="max-w-35 truncate">
 
                             /{poll.slug}
 
