@@ -91,7 +91,7 @@ const HowItWorks = () => {
 
                     {/* connecting line */}
 
-                    <div className="absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent lg:block" />
+                    <div className="absolute left-0 right-0 top-7 hidden h-px bg-linear-to-r from-transparent via-zinc-700 to-transparent lg:block" />
 
                     <div className="grid gap-10 lg:grid-cols-3">
 

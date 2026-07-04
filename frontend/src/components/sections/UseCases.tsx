@@ -103,7 +103,7 @@ const UseCases = () => {
                                 className="group rounded-[28px] border border-zinc-800 bg-zinc-900/70 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/20"
                             >
 
-                                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/10 text-cyan-300">
+                                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-cyan-500/20 to-blue-500/10 text-cyan-300">
 
                                     <Icon size={30} />
 

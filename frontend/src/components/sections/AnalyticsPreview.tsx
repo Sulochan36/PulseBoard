@@ -76,7 +76,7 @@ const AnalyticsPreview = () => {
 
                         <div className="absolute inset-0 rounded-[40px] bg-cyan-500/10 blur-3xl" />
 
-                        <div className="relative rounded-[32px] border border-zinc-800 bg-zinc-900/80 p-7 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,.45)]">
+                        <div className="relative rounded-4xl border border-zinc-800 bg-zinc-900/80 p-7 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,.45)]">
 
                             {/* top */}
 
@@ -205,7 +205,7 @@ const AnalyticsPreview = () => {
 
                                 <div className="flex flex-col items-center justify-center rounded-2xl bg-zinc-950">
 
-                                    <div className="flex h-24 w-24 items-center justify-center rounded-full border-[10px] border-cyan-400 border-r-zinc-700 border-b-zinc-700">
+                                    <div className="flex h-24 w-24 items-center justify-center rounded-full border-10 border-cyan-400 border-r-zinc-700 border-b-zinc-700">
 
                                         <PieChart
                                             size={26}

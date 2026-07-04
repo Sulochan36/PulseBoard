@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyPollsAPI } from "../services/poll.service";
-import PollCard from "../components/PollCard";
 import Container from "../components/layout/Container";
-import { useUser } from "@clerk/react";
 import EmptyDashboard from "./EmptyDashboard";
 import FilledDashboard from "./FilledDashboard";
 
@@ -10,8 +8,6 @@ const Dashboard = () => {
 
     const [polls, setPolls] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-
-    const { user } = useUser();
 
     
     const fetchPolls = async () => {

@@ -16,7 +16,7 @@ const Hero = () => {
             {/* Background */}
             <div className="absolute inset-0 -z-10">
 
-                <div className="absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+                <div className="absolute left-1/2 top-0 h-175 w-175 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
                 <div className="absolute right-0 top-48 h-96 w-96 rounded-full bg-blue-500/10 blur-[120px]" />
 
@@ -44,7 +44,7 @@ const Hero = () => {
 
                             Engage every audience with{" "}
 
-                            <span className="bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">
+                            <span className="bg-linear-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">
 
                                 realtime polls
 
@@ -66,7 +66,7 @@ const Hero = () => {
 
                         <div className="mt-10 flex flex-wrap gap-4">
 
-                            <button className="group flex items-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-4 font-semibold text-black transition hover:scale-[1.03] hover:shadow-2xl hover:shadow-cyan-500/30">
+                            <button className="group flex items-center gap-2 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 px-7 py-4 font-semibold text-black transition hover:scale-[1.03] hover:shadow-2xl hover:shadow-cyan-500/30">
 
                                 Start Creating
 
@@ -175,7 +175,7 @@ const Hero = () => {
 
                         {/* Dashboard */}
 
-                        <div className="rounded-[32px] border border-zinc-800 bg-zinc-900/70 p-7 shadow-2xl backdrop-blur-xl">
+                        <div className="rounded-4xl border border-zinc-800 bg-zinc-900/70 p-7 shadow-2xl backdrop-blur-xl">
 
                             {/* Top */}
 
@@ -276,7 +276,7 @@ const Hero = () => {
                                         <div className="h-3 overflow-hidden rounded-full bg-zinc-800">
 
                                             <div
-                                                className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
+                                                className="h-full rounded-full bg-linear-to-r from-cyan-400 to-blue-500"
                                                 style={{
                                                     width: `${value}%`,
                                                 }}

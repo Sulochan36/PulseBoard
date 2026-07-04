@@ -66,7 +66,7 @@ const TopPollsCard = () => {
 
                             <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
                                 <div
-                                    className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"
+                                    className="h-full rounded-full bg-linear-to-r from-cyan-500 to-blue-500"
                                     style={{
                                         width: `${poll.completion}%`,
                                     }}

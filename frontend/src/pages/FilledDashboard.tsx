@@ -10,7 +10,6 @@ import EngagementOverviewCard from "../components/EngagementOverviewCard";
 
 const FilledDashboard = () => {
     const [polls, setPolls] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
 
     const { user } = useUser();
 
@@ -21,9 +20,7 @@ const FilledDashboard = () => {
             setPolls(res.polls);
         } catch (err) {
             console.log(err);
-        } finally {
-            setLoading(false);
-        }
+        } 
     };
 
     useEffect(() => {

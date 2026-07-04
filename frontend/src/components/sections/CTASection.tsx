@@ -14,11 +14,11 @@ const CTASection = () => {
 
             {/* Background Glow */}
 
-            <div className="absolute left-1/2 top-1/2 h-[550px] w-[550px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+            <div className="absolute left-1/2 top-1/2 h-137.5 w-137.5-translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
             <Container>
 
-                <div className="relative overflow-hidden rounded-[40px] border border-cyan-500/20 bg-gradient-to-br from-zinc-900 via-zinc-900 to-cyan-950/40 px-10 py-20 shadow-[0_40px_100px_rgba(0,0,0,.45)]">
+                <div className="relative overflow-hidden rounded-[40px] border border-cyan-500/20 bg-linear-to-br from-zinc-900 via-zinc-900 to-cyan-950/40 px-10 py-20 shadow-[0_40px_100px_rgba(0,0,0,.45)]">
 
                     {/* Floating Cards */}
 

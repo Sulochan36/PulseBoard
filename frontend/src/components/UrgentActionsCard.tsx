@@ -1,5 +1,4 @@
 import {
-    AlertTriangle,
     Clock3,
     Rocket,
     ArrowRight,
