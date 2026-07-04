@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import Container from "../layout/Container";
+import AuthCTA from "../AuthCTA";
 
 const Hero = () => {
     return (
@@ -66,22 +67,19 @@ const Hero = () => {
 
                         <div className="mt-10 flex flex-wrap gap-4">
 
-                            <button className="group flex items-center gap-2 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 px-7 py-4 font-semibold text-black transition hover:scale-[1.03] hover:shadow-2xl hover:shadow-cyan-500/30">
-
+                            <AuthCTA
+                                to="/dashboard/pollbuilder"
+                                className="group flex items-center gap-2 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 px-7 py-4 font-semibold text-black transition hover:scale-[1.03] hover:shadow-2xl hover:shadow-cyan-500/30"
+                            >
                                 Start Creating
 
                                 <ArrowRight
                                     size={18}
                                     className="transition group-hover:translate-x-1"
                                 />
+                            </AuthCTA>
 
-                            </button>
-
-                            <button className="rounded-2xl border border-zinc-700 bg-zinc-900/80 px-7 py-4 font-medium transition hover:border-cyan-500/30 hover:bg-zinc-800">
-
-                                Live Demo
-
-                            </button>
+                            
 
                         </div>
 

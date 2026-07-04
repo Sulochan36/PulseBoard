@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import Container from "../layout/Container";
+import AuthCTA from "../AuthCTA";
 
 const CTASection = () => {
     return (
@@ -124,7 +125,9 @@ const CTASection = () => {
 
                         <div className="mt-12 flex flex-wrap justify-center gap-5">
 
-                            <button className="group flex items-center gap-3 rounded-2xl bg-cyan-500 px-8 py-4 font-semibold text-black transition hover:scale-105 hover:bg-cyan-400">
+                            <AuthCTA 
+                            to="/dashboard/pollbuilder"
+                            className="group flex items-center gap-3 rounded-2xl bg-cyan-500 px-8 py-4 font-semibold text-black transition hover:scale-105 hover:bg-cyan-400">
 
                                 Start Creating
 
@@ -133,13 +136,8 @@ const CTASection = () => {
                                     className="transition group-hover:translate-x-1"
                                 />
 
-                            </button>
+                            </AuthCTA>
 
-                            <button className="rounded-2xl border border-zinc-700 bg-zinc-900 px-8 py-4 font-semibold transition hover:border-cyan-500">
-
-                                View Demo
-
-                            </button>
 
                         </div>
 

@@ -2,10 +2,12 @@ import { NavLink, Outlet } from "react-router-dom"
 import Navbar from "../components/layout/Navbar"
 import Footer from "../components/layout/Footer"
 import Container from "../components/layout/Container"
+import ScrollToTop from "./ScrollToTop"
 
 const DashboardLayout = () => {
     return (
         <div className='bg-zinc-950 text-white flex flex-col gap-10'>
+            <ScrollToTop/>
             <Navbar />
 
             <Container className='mt-10 border-x-2 border-neutral-700/60 w-full'>
