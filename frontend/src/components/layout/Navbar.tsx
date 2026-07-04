@@ -26,23 +26,30 @@ const Navbar = () => {
 
                         <a
                             href="#features"
-                            className="hover:text-white transition"
+                            className="transition hover:text-white"
                         >
                             Features
                         </a>
 
                         <a
+                            href="#how-it-works"
+                            className="transition hover:text-white"
+                        >
+                            How it Works
+                        </a>
+
+                        <a
                             href="#analytics"
-                            className="hover:text-white transition"
+                            className="transition hover:text-white"
                         >
                             Analytics
                         </a>
 
                         <a
-                            href="#faq"
-                            className="hover:text-white transition"
+                            href="#use-cases"
+                            className="transition hover:text-white"
                         >
-                            FAQ
+                            Use Cases
                         </a>
 
                     </nav>

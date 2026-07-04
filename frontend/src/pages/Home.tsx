@@ -24,11 +24,25 @@ const Home = () => {
             <main>
                 <Hero />
                 <StatsStrip />
-                <Features />
-                <HowItWorks />
-                <AnalyticsPreview />
-                <UseCases/>
-                <CTASection />
+                <section id="features">
+                    <Features />
+                </section>
+
+                <section id="how-it-works">
+                    <HowItWorks />
+                </section>
+
+                <section id="analytics">
+                    <AnalyticsPreview />
+                </section>
+
+                <section id="use-cases">
+                    <UseCases />
+                </section>
+
+                <section id="cta">
+                    <CTASection />
+                </section>
             </main>
 
             

@@ -1,8 +1,12 @@
+import ComingSoon from "../components/ComingSoon"
 
 
 const Responses = () => {
     return (
-        <div>Responses</div>
+        <ComingSoon
+            title="Responses"
+            description="Monitor visitors, active respondents and live activity across all your polls."
+        />
     )
 }
 
